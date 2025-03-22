@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users Page</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+    <div th:if="${success}">
+        <p th:text="${success}"/>
+    </div>
+    <a href="/api/v1/users/sign-up">Sign up new user</a>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="user, iteration : ${users}">
+            <td th:text="${iteration.count}"/>
+            <td th:text="${user.username}"></td>
+            <td><a th:href="@{/api/v1/users/edit/{username}(username=${user.username})}"><img src="/images/edit.png" alt="edit"></a></td>
+            <td>
+                <form th:action="@{/api/v1/users/{username}(username=${user.username})}" method="post">
+                    <input type="hidden" name="_method" value="DELETE"/>
+                    <button type="submit" style="border: none; background: none">
+                        <img src="/images/delete.png" alt="delete">
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
