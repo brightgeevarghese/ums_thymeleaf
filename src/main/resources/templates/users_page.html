@@ -24,7 +24,7 @@
             <td>
                 <form th:action="@{/api/v1/users/{username}(username=${user.username})}" method="post">
                     <input type="hidden" name="_method" value="DELETE"/>
-                    <button type="submit" style="border: none; background: none">
+                    <button type="submit">
                         <img src="/images/delete.png" alt="delete">
                     </button>
                 </form>

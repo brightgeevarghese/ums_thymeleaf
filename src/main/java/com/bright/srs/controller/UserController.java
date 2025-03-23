@@ -20,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public String listUsers(Model model, @ModelAttribute("success") String success) {
+    public String listUsers(Model model) {
         List<UserResponseDto> userResponseDtos = userService.findAllUsers();
         System.out.println("Users: " + userResponseDtos);
         model.addAttribute("users", userResponseDtos);
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/sign-up")
-    public String showSignUpPage(Model model, @ModelAttribute("error") String error) {
+    public String showSignUpPage(Model model) {
         model.addAttribute(
                 "userRequestDto",
                 new UserRequestDto(
