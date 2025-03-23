@@ -20,12 +20,12 @@
         <tr th:each="user, iteration : ${users}">
             <td th:text="${iteration.count}"/>
             <td th:text="${user.username}"></td>
-            <td><a th:href="@{/api/v1/users/edit/{username}(username=${user.username})}"><img src="/images/edit.png" alt="edit"></a></td>
+            <td><a th:href="@{/api/v1/users/edit/{username}(username=${user.username})}"><img th:src="@{/images/edit.png}" alt="edit"></a></td>
             <td>
                 <form th:action="@{/api/v1/users/{username}(username=${user.username})}" method="post">
                     <input type="hidden" name="_method" value="DELETE"/>
                     <button type="submit">
-                        <img src="/images/delete.png" alt="delete">
+                        <img th:src="@{/images/delete.png}" alt="delete">
                     </button>
                 </form>
             </td>
