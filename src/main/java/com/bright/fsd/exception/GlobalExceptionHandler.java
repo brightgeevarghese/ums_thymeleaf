@@ -10,7 +10,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handleMethodArgumentNotValidException(MethodArgumentNotValidException e, Model model) {
-        model.addAttribute("errors", e.getBindingResult().getAllErrors());
+        model.addAttribute("errors", e.getBindingResult().getAllErrors().stream().map(
+                fieldError -> fieldError.getDefaultMessage() + ", " + fieldError.getObjectName()
+        ));
         return "error";
     }
 }

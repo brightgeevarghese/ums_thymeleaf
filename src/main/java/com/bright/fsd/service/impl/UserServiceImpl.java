@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserResponseDto> updateUser(String username, UserRequestDto userRequestDto) {
         Optional<User> userOptional = userRepository.findByUsername(username);
+        System.out.println(userOptional + "service");
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setPassword(userRequestDto.password());

@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Edit user</title>
 </head>
 <body>
-
+    <form th:action="@{/api/v1/users/{username}(username=${userRequestDto.username})}" method="post" th:object="${userRequestDto}">
+        <input type="hidden" name="_method" value="PUT">
+        <label>First Name <input type="text" th:field="*{firstName}"/></label>
+        <label>Last Name <input type="text" th:field="*{lastName}"/></label>
+        <label>Username <input type="text" th:field="*{username}" readonly/></label>
+        <label>Password <input type="text" th:field="*{password}"/></label>
+        <button type="submit">Update</button>
+    </form>
 </body>
 </html>

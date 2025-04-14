@@ -56,15 +56,9 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public String getUser(@PathVariable String username, Model model, RedirectAttributes redirectAttributes) {
-        Optional<UserResponseDto> optionalUserResponseDto = userService.findUserByUsername(username);
-        if (optionalUserResponseDto.isPresent()) {
-            model.addAttribute("userResponseDto", optionalUserResponseDto.get());
-            return "edit-user";
-        } else {
-            redirectAttributes.addFlashAttribute("error", username + " does not exist");
-            return "redirect:/api/v1/users/";
-        }
+    public String getUser(@PathVariable String username, Model model) {
+        model.addAttribute("userRequestDto", new UserRequestDto(null, null, username, null));
+        return "edit-user";
     }
 
     @DeleteMapping("/{username}")
@@ -72,5 +66,17 @@ public class UserController {
         userService.deleteUser(username);
         redirectAttributes.addFlashAttribute("success", username + " deleted successfully");
         return "redirect:/api/v1/users";
+    }
+
+    @PutMapping("/{username}")
+    public String updateUser(@PathVariable String username, @ModelAttribute UserRequestDto userRequestDto, RedirectAttributes redirectAttributes, Model model) {
+        Optional<UserResponseDto> optionalUserResponseDto = userService.updateUser(username, userRequestDto);
+        if (optionalUserResponseDto.isPresent()) {
+            redirectAttributes.addFlashAttribute("success", userRequestDto.username() + " updated successfully");
+            return "redirect:/api/v1/users";
+        } else {
+            redirectAttributes.addFlashAttribute("error", userRequestDto.username() + " not updated");
+            return "redirect:/api/v1/users";
+        }
     }
 }
